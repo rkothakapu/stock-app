@@ -41,3 +41,6 @@ def setup_sod_df() -> pd.DataFrame:
     sod_df['last_price'] = sod_df['Close']
     sod_df['price_on_last_alert'] = sod_df['Close']
 
+    now = datetime.now()
+    sod_df['last_updated_on'] = now
+    sod_df['last_updated_on_str'] = now.strftime("%d/%m/%Y %H:%M:%S")
