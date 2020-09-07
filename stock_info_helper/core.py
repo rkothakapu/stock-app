@@ -31,5 +31,6 @@ def get_prev_eod_df() -> pd.DataFrame:
     """Read the csv file containing list of stocks.
     Return generic info on these stocks from prev business day"""
     stocks = pd.Series.read_csv("stocks.csv")
-    prev_eod_df =  get_prev_bday_data(stocks)
-    return prev_eod_df.unstack().unstack(level=0)
+    prev_eod_df = get_prev_bday_data(stocks)
+    return prev_eod_df.stack()
+
