@@ -1,7 +1,7 @@
 from yahoo_fin import stock_info as si
 from pandas.tseries.offsets import BDay
 import pandas_datareader.data as web
-from datetime import date
+from datetime import date, datetime
 import pandas as pd
 
 
@@ -33,4 +33,11 @@ def get_prev_eod_df() -> pd.DataFrame:
     stocks = pd.Series.read_csv("stocks.csv")
     prev_eod_df = get_prev_bday_data(stocks)
     return prev_eod_df.stack()
+
+
+def setup_sod_df() -> pd.DataFrame:
+    """Using prev_eod_df, add new features essential"""
+    sod_df = get_prev_eod_df()
+    sod_df['last_price'] = sod_df['Close']
+    sod_df['price_on_last_alert'] = sod_df['Close']
 
