@@ -44,3 +44,4 @@ def setup_sod_df() -> pd.DataFrame:
     now = datetime.now()
     sod_df['last_updated_on'] = now
     sod_df['last_updated_on_str'] = now.strftime("%d/%m/%Y %H:%M:%S")
+    sod_df['price_change_percent'] = 0.0
