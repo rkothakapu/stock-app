@@ -6,25 +6,28 @@ import pandas as pd
 
 
 def get_curr_price(ticker: str) -> float:
-    """Retrieves the current price for a requested ticker symbol"""
+    """Retrieves the current price for a requested ticker symbol
+    Can call the function with a list of tickers or
+    pandas Series containing ticker symbols as well.
+    """
     try:
         return si.get_live_price(ticker)
     except Exception as e:
         print(e)
 
 
-def get_stock_generic_data(ticker: pd.Series, day: date) -> pd.DataFrame:
+def get_stock_generic_data(stocks: pd.Series, day: date) -> pd.DataFrame:
     """Get info on a stock for a given day
     Information retrieved: High, low, open, close, volume, Adj Close
     """
-    return web.DataReader(ticker, 'yahoo', day, day)
+    return web.DataReader(stocks, 'yahoo', day, day)
 
 
-def get_prev_bday_data(ticker: pd.Series) -> pd.DataFrame:
+def get_prev_bday_data(stocks: pd.Series) -> pd.DataFrame:
     """Retrieve info for previous business day"""
     today = date.today()
     prev_bday = today - BDay(1)
-    return get_stock_generic_data(ticker, prev_bday)
+    return get_stock_generic_data(stocks, prev_bday)
 
 
 def get_prev_eod_df(stocks) -> pd.DataFrame:
@@ -46,3 +49,9 @@ def setup_sod_df(stocks) -> pd.DataFrame:
     sod_df['price_change_percent'] = 0.0
 
     return sod_df
+
+
+if __name__ == "__main__":
+    df = pd.read_csv('tests/stocks_test.csv')
+    gen_data = get_stock_generic_data(df['Stocks'], date.today())
+    print("data frame is:\n{}".format(gen_data))
