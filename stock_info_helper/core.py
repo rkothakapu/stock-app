@@ -31,6 +31,13 @@ def get_prev_bday_data(stocks: pd.Series) -> pd.DataFrame:
     return get_historical_data(stocks, prev_bday)
 
 
+def update_last_price(stocks_df: pd.DataFrame):
+    """Retrieve the current stock price and update the dataframe
+    This method doesn't update last_updated and last_updated_str features
+    Calling function must update them"""
+    stocks_df['last_price'] = stocks_df['Symbols'].apply(get_curr_price())
+
+
 def setup_sod_df(stocks) -> pd.DataFrame:
     """Using get_prev_bday_data, add new features essential"""
     sod_df = get_prev_bday_data(stocks)
@@ -54,3 +61,5 @@ if __name__ == "__main__":
     sod_df_test = setup_sod_df(df['Stocks'])
     print("data frame is:\n{}".format(sod_df_test))
     print("Shape is:\n{}".format(sod_df_test.shape))
+
+    print("Current prices are is:\n{}".format(df['Stocks'].apply(get_curr_price)))
