@@ -8,3 +8,10 @@ def update_change(stocks_df: pd.DataFrame):
     assert not np.isclose(stocks_df['last_alert_price'], 0.0).any()
 
     stocks_df['change'] = (stocks_df['last_price'] / stocks_df['last_alert_price']) - 1
+
+
+def get_stocks_to_alert(stocks_df: pd.DataFrame, threshold: float) -> pd.Series:
+    assert 'Symbols' in stocks_df
+
+    update_change(stocks_df)
+    return stocks_df[abs(stocks_df['change']) > threshold][['Symbols', 'change']]

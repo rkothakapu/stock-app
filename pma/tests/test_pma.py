@@ -16,4 +16,8 @@ class TestPMA(unittest.TestCase):
         update_change(stocks_df=self.stocks_df)
         self.assertTrue(np.allclose(expected_change, self.stocks_df['change']))
 
-
+    def test_get_stocks_to_alert(self):
+        expected_top_movers = ['MSFT', 'NFLX', 'RAND']
+        top_movers_df = get_stocks_to_alert(self.stocks_df, 0.05)
+        # Validate 'MSFT' and 'NFLX' are detected as top movers
+        assert expected_top_movers in top_movers_df['Symbols'].unique()
