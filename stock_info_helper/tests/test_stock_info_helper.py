@@ -9,8 +9,8 @@ class Test_stock_info_helper(unittest.TestCase):
         stocks = pd.read_csv("stocks_test.csv").iloc[:, 0]
         self.num_stocks = len(stocks)
         self.sod_df = setup_sod_df(stocks)
-        self.prev_eod_df = get_prev_eod_df(stocks)
-        self.generic_df = get_historical_data(stocks, date.today())
+        self.prev_eod_df = get_prev_bday_data(stocks)
+        self.generic_df = get_historical_data(stocks, date.today() - BDay(1))
 
     # get_curr_price
     def test_get_curr_price_whenValidTicker_thenReturnsFloat(self):
