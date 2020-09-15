@@ -8,7 +8,8 @@ class TestPMA(unittest.TestCase):
         self.stocks_df = pd.DataFrame({
             'Symbols': ['FB', 'AAPL', 'MSFT', 'NFLX', 'GOOGL', 'RAND'],
             'last_price': [103.5, 97, 107.5, 93.2, 100.0, 0.2],
-            'last_alert_price': [100.0, 100.0, 100.0, 100.0, 100.0, 0.1]
+            'last_alert_price': [100.0, 100.0, 100.0, 100.0, 100.0, 0.1],
+            'Close': [100.0, 100.0, 100.0, 100.0, 100.0, 0.1]
         })
 
     def test_update_change(self):
@@ -18,6 +19,7 @@ class TestPMA(unittest.TestCase):
 
     def test_get_stocks_to_alert(self):
         expected_top_movers = ['MSFT', 'NFLX', 'RAND']
+        update_change(self.stocks_df)
         top_movers_df = get_stocks_to_alert(self.stocks_df, 0.05)
         # Validate 'MSFT' and 'NFLX' are detected as top movers
         assert expected_top_movers in top_movers_df['Symbols'].unique()
