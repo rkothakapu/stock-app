@@ -1,5 +1,6 @@
 import pandas as pd
 import numpy as np
+from stock_info_helper.core import *
 
 
 def update_change(stocks_df: pd.DataFrame):
@@ -13,5 +14,12 @@ def update_change(stocks_df: pd.DataFrame):
 def get_stocks_to_alert(stocks_df: pd.DataFrame, threshold: float) -> pd.Series:
     assert 'Symbols' in stocks_df
 
+    update_last_price(stocks_df)
     update_change(stocks_df)
     return stocks_df[abs(stocks_df['change']) > threshold][['Symbols', 'change']]
+
+
+if __name__ == "__main__":
+    df_all = setup_sod_df_for_all('tickers_data')
+    for key in df_all:
+        print("data frame is:\n{}".format(df_all[key]))

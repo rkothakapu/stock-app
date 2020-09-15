@@ -4,6 +4,7 @@ import pandas_datareader.data as web
 from datetime import date, datetime
 import pandas as pd
 import numpy as np
+import os
 
 
 def get_curr_price(ticker: str) -> float:
@@ -50,6 +51,19 @@ def setup_sod_df(stocks) -> pd.DataFrame:
     sod_df['change'] = 0.0
 
     return sod_df
+
+
+def setup_sod_df_for_all(directory):
+    """Filepath contains list of csv files containing ticker symbols.
+    Setup sod df for each"""
+    df_all = {}
+    for filename in os.listdir(os.path.join(os.getcwd(), directory)):
+        if filename.endswith(".csv"):
+            file = os.path.join(directory, filename)
+            ticker_df = pd.read_csv(file)
+            df_all[file] = setup_sod_df(ticker_df['Stocks'])
+
+    return df_all
 
 
 if __name__ == "__main__":
