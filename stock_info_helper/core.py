@@ -36,7 +36,7 @@ def update_last_price(stocks_df: pd.DataFrame):
     """Retrieve the current stock price and update the dataframe
     This method doesn't update last_updated and last_updated_str features
     Calling function must update them"""
-    stocks_df['last_price'] = stocks_df['Symbols'].apply(get_curr_price())
+    stocks_df['last_price'] = stocks_df['Symbols'].apply(get_curr_price)
 
 
 def setup_sod_df(stocks) -> pd.DataFrame:
@@ -61,7 +61,7 @@ def setup_sod_df_for_all(directory):
         if filename.endswith(".csv"):
             file = os.path.join(directory, filename)
             ticker_df = pd.read_csv(file)
-            df_all[file] = setup_sod_df(ticker_df['Stocks'])
+            df_all[filename] = setup_sod_df(ticker_df['Stocks'])
 
     return df_all
 
