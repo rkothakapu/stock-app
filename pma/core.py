@@ -11,9 +11,8 @@ def update_change(stocks_df: pd.DataFrame):
 
 def get_stocks_to_alert(stocks_df: pd.DataFrame, threshold: float) -> pd.Series:
     assert 'Symbols' in stocks_df
+    assert 'change' in stocks_df
 
-    update_last_price(stocks_df)
-    update_change(stocks_df)
     return stocks_df[abs(stocks_df['change']) > threshold][['Symbols', 'change']]
 
 
