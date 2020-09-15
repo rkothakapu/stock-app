@@ -22,4 +22,5 @@ def get_stocks_to_alert(stocks_df: pd.DataFrame, threshold: float) -> pd.Series:
 if __name__ == "__main__":
     df_all = setup_sod_df_for_all('tickers_data')
     for key in df_all:
+        print(key)
         print("data frame is:\n{}".format(df_all[key]))
