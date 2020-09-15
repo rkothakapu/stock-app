@@ -1,5 +1,3 @@
-import pandas as pd
-import numpy as np
 from stock_info_helper.core import *
 
 
@@ -8,7 +6,7 @@ def update_change(stocks_df: pd.DataFrame):
     assert 'last_alert_price' in stocks_df
     assert not np.isclose(stocks_df['last_alert_price'], 0.0).any()
 
-    stocks_df['change'] = (stocks_df['last_price'] / stocks_df['last_alert_price']) - 1
+    stocks_df['change'] = (stocks_df['last_price'] / stocks_df['last_alert_price'].fillna(stocks_df['Close'])) - 1
 
 
 def get_stocks_to_alert(stocks_df: pd.DataFrame, threshold: float) -> pd.Series:
